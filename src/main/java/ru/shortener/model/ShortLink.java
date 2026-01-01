@@ -8,45 +8,60 @@ import java.time.LocalDateTime;
 public class ShortLink {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
+    private Long id;
 
-    String originalUrl;
-    @Column(unique = true)
-    String shortcode;
-    LocalDateTime createdAt =LocalDateTime.now();
-    Long count=0L;
+    @Column(nullable = false, unique = true)
+    private String originalUrl;
+
+    @Column(nullable = false, unique = true)
+    private String shortcode;
+    @Column(nullable = false, unique = false)
+    private Long count;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
     public Long getCount() {
         return count;
     }
+
     public void setCount(Long count) {
         this.count = count;
     }
+
     public Long getId() {
-        return Id;
+        return id;
     }
+
     public String getOriginalUrl() {
         return originalUrl;
 
     }
+
     public String getShortcode() {
         return shortcode;
     }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-    public void incCount(){
+
+    public void incCount() {
         this.count++;
     }
-    public void setId(Long Id) {
-        this.Id = Id;
+
+    public void setId(Long id) {
+        this.id = id;
     }
+
     public void setOriginalUrl(String originalUrl) {
         this.originalUrl = originalUrl;
     }
+
     public void setShortcode(String shortcode) {
         this.shortcode = shortcode;
     }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+@PrePersist
+    public void onCreated() {
+        this.createdAt = LocalDateTime.now();
     }
 }

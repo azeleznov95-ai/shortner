@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Сокращатель ссылок</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<main class="card">
+    <h1>Сокращатель ссылок</h1>
+
+    <form id="form" class="form">
+        <label class="label" for="url">Вставь длинную ссылку</label>
+        <input
+                id="url"
+                class="input"
+                type="url"
+                placeholder="https://example.com/very/long/link"
+                required
+                autocomplete="off"
+        />
+        <button id="btn" class="btn" type="submit">Сократить</button>
+    </form>
+
+    <section id="result" class="result hidden">
+        <div class="row">
+            <div class="k">Короткая ссылка:</div>
+            <a id="shortLink" class="link" href="#" target="_blank" rel="noreferrer"></a>
+        </div>
+
+        <div class="row">
+            <button id="copyBtn" class="btn secondary" type="button">Скопировать</button>
+            <span id="copyStatus" class="muted"></span>
+        </div>
+    </section>
+
+    <p id="error" class="error hidden"></p>
+
+    <footer class="footer muted">
+        API: <code>POST /shorten</code> (body: <code>{"url":"..."}</code>)
+    </footer>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

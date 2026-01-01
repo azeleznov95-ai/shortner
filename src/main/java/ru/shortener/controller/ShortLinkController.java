@@ -28,7 +28,7 @@ public class ShortLinkController {
         ShortLinkResponse clientUrlResponse = new ShortLinkResponse(clientUrl);
         return clientUrlResponse;
     }
-    @GetMapping("{code}")
+    @GetMapping("/{code:[0-9A-Za-z]+}")
     public ResponseEntity<Void> getShortLink(@PathVariable String code){
         String originalUrl = service.getOriginalUrl(code);
         if (originalUrl == null){
