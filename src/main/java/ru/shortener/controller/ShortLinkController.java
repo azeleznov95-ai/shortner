@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.shortener.dto.ShortLinkResponse;
+import ru.shortener.dto.ShortLinkStatsResponse;
 import ru.shortener.dto.UrlRequest;
 import ru.shortener.model.ShortLink;
 import ru.shortener.service.ShortLinkService;
@@ -33,6 +34,12 @@ public class ShortLinkController {
     public ResponseEntity<Void> getShortLink(@PathVariable String code){
         String originalUrl = service.getOriginalUrl(code);
         return ResponseEntity.status(307).header("Location", originalUrl).build();
+
+
+    }
+    @GetMapping("/stats/{code}")
+    public ShortLinkStatsResponse getStats(@PathVariable String code){
+        return service.getStats(code);
 
 
     }
