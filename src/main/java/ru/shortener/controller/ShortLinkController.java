@@ -1,5 +1,6 @@
 package ru.shortener.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.shortener.dto.ShortLinkResponse;
@@ -20,7 +21,7 @@ public class ShortLinkController {
 
     
     @PostMapping("/shorten")
-    public ShortLinkResponse createShortLink(@RequestBody UrlRequest urlRequest){
+    public ShortLinkResponse createShortLink(@RequestBody @Valid UrlRequest urlRequest){
         String url = urlRequest.getUrl();
         ShortLink shortLink = service.createShortLink(url);
         String baseUrl = appProperties.getBaseurl();
@@ -28,13 +29,10 @@ public class ShortLinkController {
         ShortLinkResponse clientUrlResponse = new ShortLinkResponse(clientUrl);
         return clientUrlResponse;
     }
-    @GetMapping("{code}")
+    @GetMapping("/{code}")
     public ResponseEntity<Void> getShortLink(@PathVariable String code){
         String originalUrl = service.getOriginalUrl(code);
-        if (originalUrl == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.status(301).header("Location", originalUrl).build();
+        return ResponseEntity.status(307).header("Location", originalUrl).build();
 
 
     }

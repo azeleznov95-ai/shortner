@@ -3,6 +3,11 @@ package ru.shortener.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.shortener.model.ShortLink;
 
+import java.util.Optional;
+
 public interface ShortLinkRepository extends JpaRepository<ShortLink, Long> {
-    ShortLink findByShortcode(String shortCode);
+    Optional<ShortLink> findByShortcode(String shortCode);
+    Optional<ShortLink> findByOriginalUrl(String shortcode);
+
+
 }
