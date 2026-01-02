@@ -3,6 +3,7 @@ package ru.shortener.exception;
 
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,5 +30,13 @@ public class GlobalExceptionHandler {
         errorResponse.setTimestamp(LocalDateTime.now());
         errorResponse.setStatus(404);
         return ResponseEntity.status(404).body(errorResponse);
+
+    }
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setStatus(400);
+        errorResponse.setTimestamp(LocalDateTime.now());
+        errorResponse.setMessage(ex.getMessage());
+        return ResponseEntity.status(400).body(errorResponse);
     }
 }
