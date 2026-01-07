@@ -20,7 +20,11 @@ public class ShortLinkController {
         
     }
 
-    
+    @GetMapping("/stats/{code}")
+    public ShortLinkStatsResponse getStats(@PathVariable String code){
+        return service.getStats(code);
+
+    }
     @PostMapping("/shorten")
     public ShortLinkResponse createShortLink(@RequestBody @Valid UrlRequest urlRequest){
         String url = urlRequest.getUrl();

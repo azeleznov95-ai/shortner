@@ -10,7 +10,7 @@ import ru.shortener.exceptons.InvalidUrlException;
 import ru.shortener.exceptons.ShortLinkNotFoundException;
 import ru.shortener.model.ShortLink;
 import ru.shortener.repository.ShortLinkRepository;
-import ru.shortener.util.Base62Encoder;
+import ru.shortener.util.Encoder;
 
 
 import java.net.URI;
@@ -22,10 +22,10 @@ import java.util.Optional;
 @Service
 public class ShortLinkServiceImpl implements ShortLinkService {
     private final ShortLinkRepository repository;
-    private final Base62Encoder base62Encoder;
-    ShortLinkServiceImpl(ShortLinkRepository repository,Base62Encoder base62Encoder){
+    private final Encoder encoder;
+    ShortLinkServiceImpl(ShortLinkRepository repository, Encoder base62Encoder){
         this.repository = repository;
-        this.base62Encoder= base62Encoder;
+        this.encoder= base62Encoder;
     }
 
     @Override
@@ -46,10 +46,9 @@ public class ShortLinkServiceImpl implements ShortLinkService {
         if (optionalShortLink.isEmpty()){
             ShortLink shortLink = new ShortLink();
             shortLink.setOriginalUrl(url);
-            repository.save(shortLink);
-            Long id =shortLink.getId();
 
-            String shortcode = base62Encoder.encode(id);
+
+            String shortcode = encoder.encode();
             shortLink.setShortcode(shortcode);
 
             return repository.save(shortLink);

@@ -3,22 +3,21 @@ package ru.shortener.util;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 @Component
-public class Base62Encoder {
+public class Encoder {
 private static final String ALPHABET = "0123456789" +
         "abcdefghijklmnopqrstuvwxyz" +
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public String encode (Long id){
-        if (id==0){
-            throw  new IllegalArgumentException("Id must be more than 0");
+    public String encode (){
+        String shortCode="";
+        Random random = new Random();
+        for(int length=0;length<=8;length++){
+            int nextChar=random.nextInt(0,61);
+            shortCode= shortCode+""+ALPHABET.charAt(nextChar);
         }
-        StringBuilder stringBuilder= new StringBuilder();
-        for(;id>0;){
-            stringBuilder.append(ALPHABET.charAt((int)(id%62)));
-            id/=62;
-
-        }
-        return stringBuilder.reverse().toString();
+        return shortCode;
     }
 }
